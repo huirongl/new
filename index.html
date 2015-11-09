@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+
+
+      $.getJSON("http://cooper-union-search-proxy.herokuapp.com/twitter/search/flower?count=10", function(response){
+
+        console.log("There are " + response.statuses.length + " tweets");
+
+        for(var i=0; i<response.statuses.length; i++) {
+          // console.log(response.statuses[i].text);
+
+          var retweet_count = response.statuses[i].retweet_count;
+          var favorite_count = response.statuses[i].favorite_count;
+
+          if(retweet_count > 0) {
+            $("body").append("<h5>"+response.statuses[i].text+"</h5>");
+
+            // console.log("This tweet was retweeted!");
+          }
+
+          if(favorite_count > 10) {
+            $("body").append(response.statuses[i].text);
+            // console.log("This tweet was favorited!");
+          }
+
+          if((retweet_count > 0) && (favorite_count>0)) {
+            $("body").append("<h1>"+response.statuses[i].text+"</h1>");
+          } else {
+
+            console.log("boring tweet " + response.statuses[i].text);
+          }
+          }
+      });
+    </script>
+  </head>
+
+  <style>
+    body{
+         background-color:lightyellow;
+       }
+
+  </style>
+
+<body>
+  <h5> * manhattan tweet garden * </h5> <br/>
+</body>
+
+
+</html>
